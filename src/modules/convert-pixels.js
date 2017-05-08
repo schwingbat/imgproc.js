@@ -6,12 +6,14 @@
  * the data just a bit easier.
  */
 
-export function rawToRGBA(px) {
+export function rawToRGBA(data) {
     return new Promise((resolve, reject) => {
-        const rgba = [];
+        const pixels = [];
 
         let subIndex = 1;
         let pixel = {};
+
+        const px = data.pixels;
 
         for (let i = 0; i < px.length; i++) {
             switch (subIndex) {
@@ -30,7 +32,7 @@ export function rawToRGBA(px) {
             case 4:
                 pixel.a = px[i];
                 subIndex = 1;
-                rgba.push(pixel);
+                pixels.push(pixel);
                 pixel = {};
                 break;
             default:
@@ -38,18 +40,39 @@ export function rawToRGBA(px) {
             }
         }
 
-        return resolve(rgba);
+        return resolve(Object.assign({}, data, { pixels }));
     });
 }
 
-export function RGBAToRaw(px) {
+export function RGBAToRaw(data) {
     return new Promise((resolve, reject) => {
-        const raw = [];
+        const pixels = [];
+        const px = data.pixels;
 
         for (let i = 0; i < px.length; i++) {
-            raw.push(px[i].r, px[i].g, px[i].b, px[i].a);
+            pixels.push(px[i].r, px[i].g, px[i].b, px[i].a);
         }
 
-        return resolve(raw);
+        return resolve(Object.assign({}, data, { pixels: new Uint8ClampedArray(pixels) }));
+    });
+}
+
+export function toImageData(data) {
+    return new Promise((resolve, reject) => {
+        if (data.pixels[0].r) {
+            // Is RGBA.
+            RGBAToRaw(data).then(raw => {
+                resolve(new ImageData(raw.pixels, raw.width, raw.height));
+            })
+            .catch(reject);
+        } else if (data.pixels instanceof Uint8ClampedArray) {
+            // Already raw.
+            resolve(new ImageData(data.pixels, data.width, data.height));
+        } else if (data.pixels instanceof Array) {
+            resolve(new ImageData(new Uint8ClampedArray(data.pixels), data.width, data.height));
+        } else {
+            console.error(data);
+            reject(new Error("Unknown type of pixel data."));
+        }
     });
 }

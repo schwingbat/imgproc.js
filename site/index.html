@@ -6,18 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 </head>
 <body>
     <aside class="sidebar">
         <h2 class="sidebar-header">Effects</h2>
-        <ul>
-            <li>Pixelate</li>
-        </ul>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="sidebar-nav-item nav-item--selected" data-effect="none">None</li>
+                <li class="sidebar-nav-item" data-effect="pixelate">Pixelate</li>
+                <li class="sidebar-nav-item" data-effect="pointillize">Pointillize</li>
+            </ul>
+        </nav>
     </aside>
 
     <main>
         <header>
-
+            <div class="ersatz-file-chooser">
+                <input type="file" class="actual-file-chooser">
+                <input type="button" class="file-chooser" value="Choose File">
+                <span class="file-name">No file chosen.</span>
+            </div>
+            <div class="loader hidden">
+                <div class="dot"></div>
+            </div>
         </header>
 
         <div class="main-content">

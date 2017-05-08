@@ -42,7 +42,11 @@ export default function getPixels(img) {
             const px = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
             if (px instanceof Uint8ClampedArray) {
-                return resolve(px);
+                return resolve({
+                    width: img.width,
+                    height: img.height,
+                    pixels: px
+                });
             } else {
                 return reject(new Error("Pixel data couldn't be read."));
             }
