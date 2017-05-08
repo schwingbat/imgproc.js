@@ -59,7 +59,9 @@ export function RGBAToRaw(data) {
 
 export function toImageData(data) {
     return new Promise((resolve, reject) => {
-        if (data.pixels[0].r) {
+        if (data instanceof ImageData) {
+            resolve(new ImageData(data.data, data.width, data.height));
+        } else if (data.pixels && data.pixels[0].r) {
             // Is RGBA.
             RGBAToRaw(data).then(raw => {
                 resolve(new ImageData(raw.pixels, raw.width, raw.height));
