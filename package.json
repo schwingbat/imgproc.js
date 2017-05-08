@@ -1,0 +1,19 @@
+{
+  "name": "imgproc",
+  "version": "1.0.0",
+  "description": "Image processing experiments in JS",
+  "main": "rollup.config.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@repo.ratwizard.io:schwingbat/imgproc.js.git"
+  },
+  "author": "Tony McCoy <tony@ratwizard.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup-watch": "^3.2.2"
+  }
+}
