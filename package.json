@@ -5,7 +5,8 @@
   "main": "rollup.config.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "deploy": "rsync -rzP --delete ./site/ tony@www.tonymccoy.me:/var/www/tonymccoy.me/public/imgproc"
   },
   "repository": {
     "type": "git",
